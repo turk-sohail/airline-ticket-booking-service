@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 const { serverConfig } = require("./src/config");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const apiRoutes = require("./src/routes/v1");
+const apiRoutes = require("./src/routes");
+const db = require("./src/models");
 
 /**
  * routes
@@ -13,7 +14,10 @@ const apiRoutes = require("./src/routes/v1");
 app.use("/api", apiRoutes);
 
 const start = () => {
+  //db.sequelize.sync({ alter: true });
   app.listen(serverConfig.PORT, () =>
     console.log(`Server started at ${serverConfig.PORT}`)
   );
 };
+
+start();
