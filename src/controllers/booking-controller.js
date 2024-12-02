@@ -22,6 +22,16 @@ const create = async (req, res) => {
   }
 };
 
+const sendDataToQueue = async (req, res) => {
+  try {
+    return await bookingService.sendToQueue();
+  } catch (error) {
+    console.log("error sending data to queue", error);
+    throw error;
+  }
+};
+
 module.exports = {
   create,
+  sendDataToQueue,
 };

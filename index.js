@@ -8,6 +8,7 @@ const apiRoutes = require("./src/routes");
 const db = require("./src/models");
 
 /**
+ *
  * routes
  */
 
@@ -15,6 +16,7 @@ app.use("/api", apiRoutes);
 
 const start = () => {
   //db.sequelize.sync({ alter: true });
+
   app.listen(serverConfig.PORT, () =>
     console.log(`Server started at ${serverConfig.PORT}`)
   );

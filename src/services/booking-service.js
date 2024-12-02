@@ -1,6 +1,12 @@
-const { FLIGHT_SERVICE_URI } = require("../config/server-config");
+const { FLIGHT_SERVICE_URI, QUEUE_NAME } = require("../config/server-config");
 const { BookingRepository } = require("../repository/booking-repository");
 const axios = require("axios");
+const RabbitMQ = require("../utils/rmq");
+const rmq = new RabbitMQ();
+(async () => {
+  // Call async functions here
+  await rmq.connect();
+})();
 class BookingService {
   constructor() {
     this.BookingRepository = new BookingRepository();
@@ -52,6 +58,25 @@ class BookingService {
       return booking;
     } catch (error) {
       console.log("error cancel booking", error);
+      throw error;
+    }
+  }
+
+  async sendToQueue() {
+    try {
+      const emailPayload = {
+        subject: "Booking Confirmed",
+        recipientEmail: "JhRqB@example.com",
+        status: "PENDING",
+        notificationTime: "2024-12-02 14:22:03.313 +0500",
+        contents: "your booking has been confirmed",
+      };
+      return await rmq.publish(
+        QUEUE_NAME,
+        Buffer.from(JSON.stringify(emailPayload))
+      );
+    } catch (error) {
+      console.log("error sending data to queue", error);
       throw error;
     }
   }
