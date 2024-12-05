@@ -66,10 +66,10 @@ class BookingService {
     try {
       const emailPayload = {
         subject: "Booking Confirmed",
-        recipientEmail: "JhRqB@example.com",
+        recipientEmail: "charo@example.com",
         status: "PENDING",
         notificationTime: "2024-12-02 14:22:03.313 +0500",
-        contents: "your booking has been confirmed",
+        contents: "your booking has been fuccked",
       };
       return await rmq.publish(
         QUEUE_NAME,

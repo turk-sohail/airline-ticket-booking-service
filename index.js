@@ -11,6 +11,9 @@ const db = require("./src/models");
  *
  * routes
  */
+app.get("/", (req, res) => {
+  res.send("home");
+});
 
 app.use("/api", apiRoutes);
 
